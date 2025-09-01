@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HawkEye 2.0</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>HawkEye 2.0 Login</h2>
+                <p>Secure AI-Powered Threat Detection Platform</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <div class="auth-options">
+                    <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+                    <button type="button" id="otpLogin" class="btn btn--outline btn--full-width">Login with OTP</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="app hidden">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🔎</span>
+                    <span class="logo-text">HawkEye 2.0</span>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <span class="nav-icon"></span>Dashboard
+                </a></li>
+                <li><a href="#upload" class="nav-link" data-section="upload">
+                    <span class="nav-icon"></span>Upload Center
+                </a></li>
+                <li><a href="#results" class="nav-link" data-section="results">
+                    <span class="nav-icon"></span>Analysis Results
+                </a></li>
+                <li><a href="#reports" class="nav-link" data-section="reports">
+                    <span class="nav-icon"></span>Reports
+                </a></li>
+                <li><a href="#admin" class="nav-link admin-only" data-section="admin">
+                    <span class="nav-icon"></span>Admin Panel
+                </a></li>
+            </ul>
+            <div class="user-info">
+                <div class="user-avatar"></div>
+                <div class="user-details">
+                    <span class="user-name">Security Analyst</span>
+                    <span class="user-role">Analyst</span>
+                </div>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="section active">
+                <div class="section-header">
+                    <h1>Security Dashboard</h1>
+                    <p>Real-time threat detection and analysis overview</p>
+                </div>
+
+                <!-- Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">🔍</div>
+                        <div class="metric-details">
+                            <h3 id="totalScans">15,847</h3>
+                            <p>Total Scans</p>
+                            <span class="metric-trend positive">+247 today</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⚠️</div>
+                        <div class="metric-details">
+                            <h3 id="threatsDetected">892</h3>
+                            <p>Threats Detected</p>
+                            <span class="metric-trend negative">+12 today</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">✅</div>
+                        <div class="metric-details">
+                            <h3 id="systemUptime">99.8%</h3>
+                            <p>System Uptime</p>
+                            <span class="metric-trend positive">Excellent</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">⚡</div>
+                        <div class="metric-details">
+                            <h3 id="avgProcessingTime">2.4s</h3>
+                            <p>Average Processing Time</p>
+                            <span class="metric-trend positive">-0.2s improved</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-container" style="position: relative; height: 400px;">
+                        <h3>Threat Detection Trends</h3>
+                        <canvas id="threatTrendsChart"></canvas>
+                    </div>
+                    <div class="threat-feed">
+                        <h3>Real-time Threat Feed</h3>
+                        <div id="threatFeed" class="threat-list"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <h3>Recent Activity</h3>
+                    <div id="recentActivity" class="activity-list"></div>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section id="upload-section" class="section">
+                <div class="section-header">
+                    <h1>Upload Center</h1>
+                    <p>Submit suspicious content for AI-powered analysis</p>
+                </div>
+
+                <div class="upload-grid">
+                    <!-- File Upload -->
+                    <div class="upload-card">
+                        <h3>File Upload</h3>
+                        <div class="upload-area" id="fileUploadArea">
+                            <div class="upload-icon">📁</div>
+                            <p>Drag & drop files here or click to browse</p>
+                            <p class="upload-info">Supports: Images, Videos, Audio, Documents (Max: 50MB)</p>
+                            <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png,.gif,.mp4,.avi,.mov,.mp3,.wav,.m4a,.pdf,.docx">
+                        </div>
+                        <div id="fileProgress" class="upload-progress hidden">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <span class="progress-text">Uploading...</span>
+                        </div>
+                    </div>
+
+                    <!-- URL Analysis -->
+                    <div class="upload-card">
+                        <h3>URL Analysis</h3>
+                        <div class="url-input-section">
+                            <div class="form-group">
+                                <label for="urlInput" class="form-label">Suspicious URL</label>
+                                <input type="url" id="urlInput" class="form-control" placeholder="https://suspicious-website.com">
+                            </div>
+                            <button id="analyzeUrl" class="btn btn--primary btn--full-width">Analyze URL</button>
+                        </div>
+                    </div>
+
+                    <!-- Email Analysis -->
+                    <div class="upload-card full-width">
+                        <h3>Email Content Analysis</h3>
+                        <div class="email-input-section">
+                            <div class="form-group">
+                                <label for="emailContent" class="form-label">Email Content</label>
+                                <textarea id="emailContent" class="form-control" rows="6" placeholder="Paste suspicious email content here..."></textarea>
+                            </div>
+                            <div class="email-actions">
+                                <button id="analyzeEmail" class="btn btn--primary btn--full-width">🔍 Analyze Email Content</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="section">
+                <div class="section-header">
+                    <h1>Analysis Results</h1>
+                    <p>Detailed threat detection results and historical data</p>
+                </div>
+
+                <div class="results-controls">
+                    <div class="filter-group">
+                        <select id="riskFilter" class="form-control">
+                            <option value="all">All Risk Levels</option>
+                            <option value="critical">Critical</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                        <select id="typeFilter" class="form-control">
+                            <option value="all">All Types</option>
+                            <option value="deepfake">Deepfake</option>
+                            <option value="phishing">Phishing</option>
+                            <option value="manipulated">Manipulated Media</option>
+                        </select>
+                    </div>
+                    <button id="exportResults" class="btn btn--outline">Export Results</button>
+                </div>
+
+                <div id="resultsContainer" class="results-grid"></div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="section">
+                <div class="section-header">
+                    <h1>Reports & Analytics</h1>
+                    <p>Generate comprehensive security reports and analytics</p>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Threat Summary Report</h3>
+                        <p>Comprehensive overview of detected threats</p>
+                        <button class="btn btn--primary">Generate Report</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Weekly Security Digest</h3>
+                        <p>Weekly summary of security activities</p>
+                        <button class="btn btn--primary">Generate Report</button>
+                    </div>
+                    <div class="report-card">
+                        <h3>Compliance Report</h3>
+                        <p>Security compliance and audit report</p>
+                        <button class="btn btn--primary">Generate Report</button>
+                    </div>
+                </div>
+
+                <!-- Geographic Threat Map -->
+                <div class="map-container">
+                    <h3>Geographic Threat Distribution</h3>
+                    <div id="threatMap" class="threat-map"></div>
+                </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin-section" class="section">
+                <div class="section-header">
+                    <h1>Admin Panel</h1>
+                    <p>System administration and user management</p>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3>Detection Models</h3>
+                        <div id="detectionModels" class="models-list"></div>
+                    </div>
+                    <div class="admin-card">
+                        <h3>System Health</h3>
+                        <div class="system-stats">
+                            <div class="stat">
+                                <span class="stat-label">CPU Usage</span>
+                                <span class="stat-value">45%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Memory Usage</span>
+                                <span class="stat-value">68%</span>
+                            </div>
+                            <div class="stat">  
+                                <span class="stat-label">Storage</span>
+                                <span class="stat-value">23%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Analysis Modal -->
+    <div id="analysisModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Analysis in Progress</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="analysis-progress">
+                <div class="progress-spinner"></div>
+                <p id="analysisStatus">Initializing AI detection models...</p>
+                <div class="progress-steps">
+                    <div class="step active">File Validation</div>
+                    <div class="step">Virus Scan</div>
+                    <div class="step">AI Analysis</div>
+                    <div class="step">Results Generation</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Detail Modal -->
+    <div id="resultModal" class="modal hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2>Analysis Results</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="resultDetails" class="result-details"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

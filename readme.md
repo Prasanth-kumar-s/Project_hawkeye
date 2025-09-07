@@ -373,9 +373,7 @@ Post Processing
 
 <img width="3840" height="2069" alt="Screenshot 2025-09-07 131115" src="https://github.com/user-attachments/assets/1d624bb5-6b3b-4c13-83b8-8db26b672188" />
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ##  Acknowledgments
 

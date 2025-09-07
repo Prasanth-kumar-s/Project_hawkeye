@@ -48,10 +48,10 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 # Clone the repository
-git clone 
+git clone https://github.com/Prasanth-kumar-s/Project_hawkeye.git
 
 # Navigate to the project directory
-cd 
+cd Project_hawkeye
 ```
 
 ### Step 2: Install Dependencies
@@ -353,7 +353,25 @@ const maxFileSizeInBytes = 10 * 1024 * 1024;
 function validateFile(file) {
     // Implementation here
 }
+
 ```
+## Output Images 
+
+Login Mechanism 
+
+<img width="3839" height="2090" alt="Screenshot 2025-09-07 131424" src="https://github.com/user-attachments/assets/55c26577-512b-49ee-b558-6684f9bf870b" />
+
+User Upload Dashboard
+
+<img width="3840" height="2069" alt="Screenshot 2025-09-07 131115" src="https://github.com/user-attachments/assets/1d624bb5-6b3b-4c13-83b8-8db26b672188" />
+
+
+Post Processing
+
+<img width="3793" height="1854" alt="Screenshot 2025-09-07 131405" src="https://github.com/user-attachments/assets/e54507c0-3f6b-409e-ab6c-a6c22ac09879" />
+
+
+
 
 ## 📄 License
 
@@ -367,9 +385,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Community feedback and contributions
 
 ##  Support
-
+For more information checkout : https://docs.google.com/document/d/1DVflTFx1OfJERn16g_u-Tb0KX5BiPBXH/edit?usp=drive_link&ouid=101172896786625623849&rtpof=true&sd=true
 
 ---
 
-** Happy uploading!  **
+
 
